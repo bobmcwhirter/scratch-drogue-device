@@ -109,7 +109,7 @@ pub use embassy_nrf as nrf;
 #[cfg(feature = "chip+rp")]
 pub use embassy_rp as rp;
 
-#[cfg(feature = "chip+stm32l0x2")]
+#[cfg(any(feature = "chip+stm32l0x2", feature = "chip+stm32f401"))]
 pub use embassy_stm32 as stm32;
 
 #[doc(hidden)]
@@ -121,7 +121,7 @@ pub mod reexport {
     pub use ::embassy_rp;
     #[cfg(feature = "std")]
     pub use ::embassy_std;
-    #[cfg(feature = "chip+stm32l0x2")]
+    #[cfg(any(feature = "chip+stm32l0x2", feature = "chip+stm32f401"))]
     pub use ::embassy_stm32;
 }
 
