@@ -1,0 +1,57 @@
+[package]
+authors = [
+    "Ulf Lilleengen <lulf@redhat.com>",
+    "Bob McWhirter <bmcwhirt@redhat.com>",
+    "Jens Reimann <jreimann@redhat.com>"
+]
+edition = "2018"
+name = "blinky"
+version = "0.1.0"
+resolver = "2"
+
+[workspace]
+
+[dependencies]
+
+defmt = "0.2"
+defmt-rtt = "0.2"
+panic-probe = { version = "0.2.0", features = ["print-defmt"] }
+
+drogue-device = { path = "../../../device", default-features = false, features = ["defmt", "defmt-info"] }
+cortex-m-rt = "0.6"
+cortex-m = { version = "0.7", features = ["inline-asm"] }
+#cortex-m = { version = "0.7", features = [] }
+
+embassy = { git = "https://github.com/drogue-iot/embassy.git", branch = "master", default-features = false, features=["defmt"] }
+embassy-stm32 = { git = "https://github.com/drogue-iot/embassy.git", branch = "master", default-features = false, features = ["defmt", "stm32l432kc"] }
+
+stm32l4 = { version = "0.13", features = ["stm32l4x2" ] }
+stm32l4xx-hal = { version = "0.6.0", features = ["stm32l4x2"] }
+
+embedded-hal = { version = "0.2.4", features = ["unproven"] }
+
+#embassy = {path = "../../../../../embassy/embassy", default-features = false}
+#embassy-stm32 = {path = "../../../../../embassy/embassy-stm32", default-features = false, features = ["stm32l072cz"] }
+
+[features]
+default = [
+    "defmt-default",
+]
+defmt-default = []
+defmt-trace = []
+defmt-debug = []
+defmt-info = []
+defmt-warn = []
+defmt-error = []
+
+[patch.crates-io]
+cortex-m = { git = "https://github.com/rust-embedded/cortex-m.git", branch = "master", features = ["device"] }
+
+[profile.release]
+codegen-units = 1
+debug = 2
+debug-assertions = false
+incremental = false
+lto = "fat"
+opt-level = 's'
+overflow-checks = false
